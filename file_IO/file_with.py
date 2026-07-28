@@ -28,4 +28,6 @@ with open("한글파일.txt", "w", encoding="utf-8") as f:
 with open("한글파일.txt", "r", encoding="utf-8") as f:
     content = f.read()
     print(content)
+
+인코딩을 명시 하지 않으면 운영체제마다 다른 기본 인코딩을 사용하여 한글이 깨질 수 있어서 주의
 """
