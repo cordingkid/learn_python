@@ -83,4 +83,329 @@ ex)
 
 for 문처럼 반복되는 구간에서 객체가 현재 어느 위치에 있는지 
 알려 주는 인덱스 값이 필요할 때 enumerate 함수를 사용하면 매우 유용하다.
+
+
+## eval(x)
+eval은 문자열로 구성된 표현식을 입력으로 받아 해당 문자열을 실행한 결괏값을 반환하는 함수
+ex)
+>>> eval('1+2')
+3
+>>> eval("'hi' + 'a'")
+'hia'
+>>> eval('divmod(4, 3)')
+(1, 1)
+신뢰할 수 없는 외부 입력에는 사용하면 안됨
+
+
+## filter
+filter(함수, 반복_가능한_데이터)
+
+filter 함수는 첫 번쨰 인수로 함수, 두 번쨰 인수로 그 함수에 차례로 들어갈 반복 가느한 데이터를 받는다.
+반복 가능한 데이터의 요소를 순서대로 하수에 전달하여 반환값이 참인 것만 묶어서 반환한다.
+ex)
+# positive.py 
+def positive(l): 
+    result = [] 
+    for i in l: 
+        if i > 0: 
+            result.append(i) 
+    return result
+
+print(positive([1,-3,2,0,-5,6]))
+[실행 결과]
+[1, 2, 6]
+
+위에서 만든 postive는 리스트를 입력받아 각 요소를 판별해서 양수 값만 반환하는 함수다.
+filter 함수를 사용하면 위 내용을 다음과 같이 간단하게 작성 가능
+ex)
+def positive(x):
+    return x > 0
+
+print(list(filter(positive, [1, -3, 2, 0, -5, 6])))
+[실행 결과]
+[1, 2, 6]
+filter(positive, [1, -3, 2, 0, -5, 6])은 [1, -3, 2, 0, -5, 6]의 
+각 요솟값을 순서대로 positive 함수에 적용하여 반환값이 참인 것만 묶어서 반환한다. 
+1, 2, 6만 x > 0 조건에 참이므로 [1, 2, 6]이라는 결괏값이 출력된다.
+
+lambda를 사용하면 더 간단해짐
+ex)
+list(filter(lambda x: x > 0, [1, -3, 2, 0, -5, 6]))
+[실행 결과]
+[1, 2, 6]
+
+
+## hex
+hex(x)는 정수를 입력받아 16진수 문자열로 변환하여 반환하는 함수
+ex)
+>>> hex(234)
+'0xea'
+>>> hex(3)
+'0x3'
+
+
+## id
+id(object)는 객체를 입력받아 객체의 고유 주솟값(래퍼런스)을 반환하는 함수다
+ex)
+>>> a = 3
+>>> id(3)
+135072304
+>>> id(a)
+135072304
+>>> b = a
+>>> id(b)
+135072304
+
+
+## input
+input([prompt])는 사용자 입력을 받는 함수이다. 
+입력 인수로 문자열을 전달하면 그 문자열은 프롬프트가 된다.
+
+
+## int
+int(x)는 문자열 형태의 숫자나 소수점이 있는 숫자를 정수로 반환하는 함수다.
+ex)
+>>> int('3')
+3
+>>> int(3.4)
+3
+
+int(x, radix)는 radix 진수로 표현된 문자열 x를 10잔수로 변환하여 반환함
+예를 들어 2진수로 표현된 '11'의 10진수 값은 다음과 같이 구함
+ex)
+>>> int('11', 2)
+3
+
+>>> int('1A', 16)
+26
+
+
+## isinstance
+isinstance(object, class)는 첫 번째 인수로 객체, 두 번째 인수로 클래스를 받는다. 
+입력받은 객체가 해당 클래스의 인스턴스인지 판단하여 참이면 True, 거짓이면 False를 반환한다.
+ex)
+>>> class Person: pass
+...
+>>> a = Person()
+>>> isinstance(a, Person)
+True
+
+>>> b = 3
+>>> isinstance(b, Person)
+False
+
+
+## len
+len(s)는 입력값 s의 길이(요소의 전체 개수)를 반환하는 함수다
+ex)
+>>> len("python")
+6
+>>> len([1,2,3])
+3
+>>> len((1, 'a'))
+2
+
+
+## list
+list(iterable)는 반복 가능한 데이터를 입력받아 리스트로 만들어 반환하는 함수다.
+ex)
+>>> list("python")
+['p', 'y', 't', 'h', 'o', 'n']
+>>> list((1,2,3))
+[1, 2, 3]
+
+
+## map
+map(f, iterable)은 함수(f)와 반복 가능한 데이터를 입력으로 받는다.
+입력받은 데이터의 각 요소에 함수 f를 적용한 결과를 반환하는 함수다.
+ex)
+def two_times(numberList):
+    result = []
+    for number in numberList:
+        result.append(number*2)
+    return result
+
+result = two_times([1, 2, 3, 4])
+print(result)
+[2, 4, 6, 8]
+
+map 함수를 사용한 ex)
+>>> def two_times(x): 
+...     return x*2
+...
+>>> list(map(two_times, [1, 2, 3, 4]))
+[2, 4, 6, 8]
+
+lambda를 사용한 ex)
+>>> list(map(lambda a: a*2, [1, 2, 3, 4]))
+[2, 4, 6, 8]
+
+
+## max
+max(iterable)는 반복 가능한 데이터를 입력받아 최댓밗을 반환하는 함수
+ex)
+>>> max([1, 2, 3])
+3
+>>> max("python")
+'y'
+
+
+## min
+min(iterable)는 max 함수와 반대로, 
+반복 가능한 데이터를 입력받아 최솟값을 반환하는 함수이다.
+ex)
+>>> min([1, 2, 3])
+1
+>>> min("python")
+'h'
+
+
+## oct
+oct(x)는 정수를 8진수 문자열로 바꾸어 반환하는 함수다.
+ex)
+>>> oct(34)
+'0o42'
+>>> oct(12345)
+'0o30071'
+
+
+## open
+open(filename, [mode])은 '파일 이름'과 '읽기 방법'을 입력받아 파일 객체를 반환하는 함수이다. 
+읽기 방법(mode)을 생략하면 기본값인 읽기 모드(r)로 파일 객체를 만들어 반환한다.
+mode	설명
+w	쓰기 모드로 파일 열기
+r	읽기 모드로 파일 열기
+a	추가 모드로 파일 열기
+b	바이너리 모드로 파일 열기
+
+b는 w, r, a와 함께 사용한다. 예를 들어 rb는 '바이너리 읽기 모드'를 의미한다.
+ex)
+>>> f = open("binary_file", "rb")
+
+
+## ord
+ord(c)는 문자의 유니코드 숫자 값을 반환하는 함수다.
+ord 함수는 chr 함수와 반대로 동작한다.
+ex)
+>>> ord('a')
+97
+>>> ord('가')
+44032
+
+
+## pow
+pow(x, y)는 x를 y제곱한 결괏값을 반환하는 함수이다.
+ex)
+>>> pow(2, 4)
+16
+>>> pow(3, 3)
+27
+
+
+## range
+range([start,] stop [,step])은 for 문과 함께 자주 사용하는 함수이다. 
+입력받은 숫자에 해당하는 범위 값을 반복 가능한 객체로 만들어 반환한다.
+
+인수가 하나일 경우 ex)
+>>> list(range(5))
+[0, 1, 2, 3, 4]
+
+인수가 2개일 경우 ex)
+>>> list(range(5, 10))
+[5, 6, 7, 8, 9]
+
+인수가 3개일 경우 ex)
+마지막 인수는 스텝임
+>>> list(range(1, 10, 2))
+[1, 3, 5, 7, 9]
+>>> list(range(0, -10, -1))
+[0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
+
+
+
+## round
+round(number [,ndigits])는 숫자를 입력받아 반올림해 반환하는 함수이다.
+[,ndigits]는 ndigits가 있을 수도 있고, 없을 수도 있다는 의미이다.
+ex)
+>>> round(4.6)
+5
+>>> round(4.2)
+4
+>>> round(5.678, 2)
+5.68
+
+
+## sorted
+sorted(iterable)는 입력 데이터를 정렬한 후 그 결과를 리스트로 반환하는 함수이다.
+ex)
+>>> sorted([3, 1, 2])
+[1, 2, 3]
+>>> sorted(['a', 'c', 'b'])
+['a', 'b', 'c']
+>>> sorted("zero")
+['e', 'o', 'r', 'z']
+>>> sorted((3, 2, 1))
+[1, 2, 3]
+리스트 자료형에도 sort 함수가 있다. 
+하지만 리스트의 sort 함수는 리스트 객체 자체를 정렬만 할 뿐, 정렬된 결과를 반환하지는 않는다.
+
+
+## str
+str(object)는 객체를 문자열 형태로 변환하여 반환하는 함수이다.
+ex)
+>>> str(3)
+'3'
+>>> str('hi')
+'hi'
+
+
+## sum
+sum(iterable)은 입력 데이터의 합을 반환하는 함수이다.
+ex)
+>>> sum([1,2,3])
+6
+>>> sum((4,5,6))
+15
+
+
+## tuple
+tuple(iterable)은 반복 가능한 데이터를 튜플로 바꾸어 반환하는 함수이다. 
+입력이 튜플인 경우에는 그대로 반환한다.
+ex)
+>>> tuple("abc")
+('a', 'b', 'c')
+>>> tuple([1, 2, 3])
+(1, 2, 3)
+>>> tuple((1, 2, 3))
+(1, 2, 3)
+
+
+## type
+type(object)는 입력값의 자료형이 무엇인지 알려 주는 함수이다.
+ex)
+>>> type("abc")
+<class 'str'>
+>>> type([ ])
+<class 'list'>
+>>> type(open("test", 'w'))
+<class '_io.TextIOWrapper'>
+
+
+## zip
+zip(*iterable)은 동일한 개수로 이루어진 데이터들을 묶어서 반환하는 함수이다.
+
+여기서 사용한 *iterable은 반복 가능한 데이터를 여러 개 입력할 수 있다는 의미이다.
+
+ex)
+>>> list(zip([1, 2, 3], [4, 5, 6]))
+[(1, 4), (2, 5), (3, 6)]
+>>> list(zip([1, 2, 3], [4, 5, 6], [7, 8, 9]))
+[(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+>>> list(zip("abc", "def"))
+[('a', 'd'), ('b', 'e'), ('c', 'f')]
+
+
+
 """
+a = zip([1], [3])
+print(type(a))
